@@ -1,0 +1,62 @@
+x-api: &api
+  build:
+    context: .
+    dockerfile: docker/dev2.Dockerfile
+  image: solids-api:1.0
+  tmpfs:
+    - /tmp
+  tty: true
+  stdin_open: true
+  volumes:
+    - .:/api:cached
+  #   - solids_bundle:/usr/local/bundle
+  environment:
+    - DB_URL=postgres://postgres:password@db:5432
+    - EDITOR=vim
+  working_dir: /api
+
+services:
+  api: 
+    <<: *api
+    command: bash -c "bundle install && rails server -b 0.0.0.0"
+    ports:
+      - 3929:3000
+    depends_on:
+      - db
+    networks:
+      - solids-local-network
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /api
+        - action: rebuild
+          path: ./Gemfile
+  solid_queue:
+    <<: *api
+    command: bash -c "bundle install && rails solid_queue:start"
+    ports:
+      - 3930:3000
+    depends_on:
+      - db
+    networks:
+      - solids-local-network
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /api
+        - action: rebuild
+          path: ./Gemfile
+  db:
+    image: postgres:14
+    ports:
+      - 3931:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+    networks:
+      - solids-local-network
+networks:
+  solids-local-network:
+    driver: bridge
+    
