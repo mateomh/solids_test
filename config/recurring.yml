@@ -8,3 +8,9 @@
 #     command: "SoftDeletedRecord.due.delete_all"
 #     priority: 2
 #     schedule: at 5am every day
+
+test_job:
+  class: TestJob
+  queue: important
+  args: [1, 2, "a"]
+  schedule: every 5 minutes
