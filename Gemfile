@@ -38,6 +38,7 @@ gem "bootsnap", require: false
 
 # Solids gems
 gem 'solid_queue'
+gem 'solid_cache'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

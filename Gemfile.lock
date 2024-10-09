@@ -184,6 +184,10 @@ GEM
     reline (0.5.10)
       io-console (~> 0.5)
     securerandom (0.3.1)
+    solid_cache (1.0.6)
+      activejob (>= 7.2)
+      activerecord (>= 7.2)
+      railties (>= 7.2)
     solid_queue (1.0.0)
       activejob (>= 7.1)
       activerecord (>= 7.1)
@@ -219,6 +223,7 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.2.0)
+  solid_cache
   solid_queue
   tzinfo-data
 
