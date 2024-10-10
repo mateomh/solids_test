@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require "solid_cache"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -19,7 +20,6 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  config.cache_store = :solid_cache_store
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
@@ -46,8 +46,6 @@ Rails.application.configure do
 
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
-  config.active_job.queue_adapter = :solid_queue
-  config.solid_queue.connects_to = { database: { writing: :queue } }
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

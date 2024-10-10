@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module SolidsTest
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.1
+    config.load_defaults 7.2
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -28,5 +28,11 @@ module SolidsTest
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.active_job.queue_adapter = :solid_queue
+    config.solid_queue.connects_to = { database: { writing: :queue } }
+    
+    config.cache_store = :solid_cache_store
+    config.solid_cache.connects_to = { database: { writing: :cache } }
   end
 end
